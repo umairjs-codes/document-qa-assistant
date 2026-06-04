@@ -5,9 +5,8 @@ FastAPI Backend - Document Q&A Application
 import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.config import settings  # ← CRITICAL IMPORT!
+from app.config import settings
 
-# Create upload directory if it doesn't exist
 os.makedirs(settings.UPLOAD_DIR, exist_ok=True)
 
 app = FastAPI(
@@ -16,7 +15,6 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# CORS Configuration
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.ALLOWED_ORIGINS,
@@ -25,7 +23,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Health Check Endpoint
 @app.get("/api/health")
 async def health_check():
     return {
@@ -34,19 +31,12 @@ async def health_check():
         "groq_configured": bool(settings.GROQ_API_KEY)
     }
 
-# Placeholder for routers 
-from app.routes import upload, chat
+# ↓ ADD/UPDATE THIS SECTION ↓
+from app.routes import upload, chat, media
 app.include_router(upload.router, prefix="/api", tags=["Upload"])
 app.include_router(chat.router, prefix="/api", tags=["Chat"])
+app.include_router(media.router, prefix="/api", tags=["Media"])  # ← NEW LINE
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(
-        "app.main:app",
-        host=settings.HOST,
-        port=settings.PORT,
-        reload=settings.DEBUG
-    )
-#     from app.routes import upload, chat
-# app.include_router(upload.router, prefix="/api", tags=["Upload"])
-# app.include_router(chat.router, prefix="/api", tags=["Chat"])
+    uvicorn.run("app.main:app", host=settings.HOST, port=settings.PORT, reload=settings.DEBUG)

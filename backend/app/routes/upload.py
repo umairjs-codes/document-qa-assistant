@@ -1,11 +1,10 @@
-from fastapi import APIRouter, File, UploadFile, HTTPException, Depends
+from fastapi import APIRouter, File, UploadFile, HTTPException
 from app.config import settings
-from app.services.document_service import DocumentService
+from app.services.document_service import DocumentService   # ← CORRECT
 from app.models.schemas import UploadResponse
 import os
 from datetime import datetime
 import uuid
- 
 router = APIRouter()
 doc_service = DocumentService()
  
