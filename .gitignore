@@ -1,0 +1,28 @@
+# Environment
+.env
+.env.local
+
+# Backend
+backend/venv/
+backend/__pycache__/
+backend/uploads/
+*.pyc
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log__pycache__/
+*.pyc
+*.pyo
+backend/.env
+.env
